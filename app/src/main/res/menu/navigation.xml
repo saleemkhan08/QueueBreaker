@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_explore"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/explore" />
+
+    <item
+        android:id="@+id/navigation_scan"
+        android:icon="@drawable/ic_crop_free_black_24dp"
+        android:title="@string/scan" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person_outline_black_24dp"
+        android:title="@string/profile" />
+
+</menu>

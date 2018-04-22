@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "367217903371",
+    "firebase_url": "https://queue-breaker.firebaseio.com",
+    "project_id": "queue-breaker",
+    "storage_bucket": "queue-breaker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367217903371:android:b77b87f4803da9bb",
+        "android_client_info": {
+          "package_name": "com.thnki.queuebreaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367217903371-aduqvto3u17v8eeqnbummaaif2cc8dpi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ8MvT8XEl5S7KmRcYag9LFLIumzEFTeE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
