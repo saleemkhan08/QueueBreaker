@@ -14,12 +14,12 @@
     <string name="password">Passowrord</string>
     <string name="login">Login</string>
     <string name="forgotPassword">Forgot Password</string>
-    <string name="loginFailed">Login Failed</string>
+    <string name="login_failed">Login Failed</string>
     <string name="no_internet">No Internet</string>
     <string name="getStarted">Get Started</string>
     <string name="validUserIdErrMsg">Please enter a valid username</string>
     <string name="validPasswordErrMsg">Please enter a valid password</string>
-    <string name="signing_in">Signing in...</string>
+    <string name="signing_up">Signing Up…</string>
     <string name="please_wait">Please Wait</string>
     <string name="password_has_been_reset_and_sent_to_your_registered_mail_id">password_has_been_reset_and_sent_to_your_registered_mail_id</string>
     <string name="please_contact_your_admin_to_reset_the_password">please_contact_your_admin_to_reset_the_password</string>
@@ -28,6 +28,7 @@
     <string name="profile">Profile</string>
     <string name="or">Or</string>
     <string name="signup">Signup</string>
+    <string name="Rs">\u20B9</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="no_restaurants_found">No Restaurants Found</string>
@@ -44,8 +45,55 @@
     <string name="email_login">Email Login</string>
     <string name="reset_password">Reset Password</string>
     <string name="auth_dialog">Auth Dialog</string>
-    <string name="logging_in">Logging in...</string>
+    <string name="logging_in">Logging in…</string>
     <string name="camera_permission_justification_msg">To Scan QR Code, Camera permission is required!</string>
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="qr_code_auto_scan_notification">Test</string>
+    <string name="facebook_app_id">771401579732120</string>
+    <string name="fb_login_protocol_scheme">fb771401579732120</string>
+    <string name="logout">Logout</string>
+    <string name="twitter_consumer_key">0fqqqGjmYVcS930gl0N5vGXIG</string>
+    <string name="twitter_consumer_secret">I6x6K1KXlInl2psdZfSrAgztXFxSEZG4ARp2tvfd7N6w75SuZG</string>
+    <string name="invalid_email_id">Invalid Email ID</string>
+    <string name="password_strength_message">Use at least 6 letters and with one capital letter, a numeric digit and a special character</string>
+    <string name="login_cancelled">Login Cancelled</string>
+    <string name="please_check_your_email_and_try_again">Please check your email and try again</string>
+    <string name="password_reset_cancllled">Password reset cancelled</string>
+    <string name="mail_sent">Mail sent</string>
+    <string name="no_menu_found">No Menu Found</string>
+    <string name="title_activity_add_menu">AddMenuActivity</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="category">Category</string>
+    <string name="save">Save</string>
+    <string name="title_activity_menu_kotlin">MenuKotlinActivity</string>
+    <string name="add_category">Add Category</string>
+    <string name="modify_categories">Modify Categories</string>
+    <string name="dialog_title">Dialog Title</string>
+    <string name="edit_categories">Edit Categories</string>
+    <string name="please_enter_a_valid_name">Please enter a valid name</string>
+    <string name="added">Added</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="adding">Adding...</string>
+    <string name="removing">Removing ...</string>
+    <string name="removed">Removed</string>
+    <string name="one_category_removed">One Category Removed</string>
+    <string name="undo">UNDO</string>
+    <string name="saving">Saving ...</string>
+    <string name="edit_dishes">Edit Dishes</string>
+    <string name="edit_dishes_list">Edit Dishes List</string>
+    <string name="please_enter_a_valid_price">Please enter a valid price</string>
+    <string name="add">Add</string>
+    <string name="cancel">cancel</string>
+    <string name="cart">Cart</string>
+    <string name="show_edit_dialog">show_edit_dialog</string>
+    <string name="orders">Orders</string>
+    <string name="place_order">Place Order</string>
+    <string name="order_list_is_empty">Your cart is empty...</string>
+    <string name="dish_list_is_empty">No Dishes</string>
+
 </resources>

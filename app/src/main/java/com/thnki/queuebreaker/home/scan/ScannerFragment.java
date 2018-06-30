@@ -3,7 +3,6 @@ package com.thnki.queuebreaker.home.scan;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.thnki.queuebreaker.R;
-import com.thnki.queuebreaker.ordering.OrderingActivity;
+import com.thnki.queuebreaker.home.explore.Restaurants;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -48,8 +49,6 @@ public class ScannerFragment extends Fragment implements ScannerContract {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("PermissionError", "onCreateView");
-        // Inflate the layout for this fragment
         View parentView = inflater.inflate(R.layout.scanner_fragment, container, false);
         ButterKnife.bind(this, parentView);
         qrCodeUtil = new QrCodeUtil(getActivity(), this);
@@ -86,10 +85,9 @@ public class ScannerFragment extends Fragment implements ScannerContract {
     @Override
     public void onQrCodeDetected(String restaurantId) {
         vibrate();
-        Log.d("PermissionError", "onQrCodeDetected : " + restaurantId);
-        Intent intent = new Intent(getActivity(), OrderingActivity.class);
-        intent.putExtra(OrderingActivity.RESTAURANT_ID, restaurantId);
-        startActivity(intent);
+        Restaurants restaurant = new Restaurants();
+        restaurant.setId(restaurantId);
+        EventBus.getDefault().post(restaurant);
     }
 
     private void vibrate() {

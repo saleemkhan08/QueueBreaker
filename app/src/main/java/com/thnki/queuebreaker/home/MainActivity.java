@@ -4,21 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.thnki.queuebreaker.R;
 import com.thnki.queuebreaker.home.explore.ExploreFragment;
 import com.thnki.queuebreaker.home.profile.ProfileFragment;
 import com.thnki.queuebreaker.home.scan.ScannerFragment;
+import com.thnki.queuebreaker.utils.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
-public class MainActivity extends AppCompatActivity implements
-        BottomNavigationView.OnNavigationItemSelectedListener,
-        ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements
+        BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
     @BindView(R.id.main_view_pager)
     ViewPager mainViewPager;
@@ -27,32 +25,31 @@ public class MainActivity extends AppCompatActivity implements
     BottomNavigationView bottomNavigationView;
 
     private MenuItem prevMenuItem;
-    private ExploreFragment exploreFragment;
-    private ScannerFragment scannerFragment;
-    private ProfileFragment profileFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void onPostCreateView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        setupViewPager();
+        setupMainViewPager();
         configureDependencies();
+    }
 
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_main;
     }
 
     private void configureDependencies() {
 
     }
 
-    private void setupViewPager() {
+    private void setupMainViewPager() {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        exploreFragment = ExploreFragment.getInstance();
-        scannerFragment = ScannerFragment.getInstance();
-        profileFragment = ProfileFragment.getInstance();
+        ExploreFragment exploreFragment = ExploreFragment.getInstance();
+        ScannerFragment scannerFragment = ScannerFragment.getInstance();
+        ProfileFragment profileFragment = ProfileFragment.getInstance();
 
         adapter.addFragment(exploreFragment);
         adapter.addFragment(scannerFragment);
@@ -61,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements
         mainViewPager.setAdapter(adapter);
         mainViewPager.addOnPageChangeListener(this);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -99,4 +95,5 @@ public class MainActivity extends AppCompatActivity implements
     public void onPageScrollStateChanged(int state) {
 
     }
+
 }

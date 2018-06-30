@@ -3,7 +3,9 @@ package com.thnki.queuebreaker.auth;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ public class AuthDialogFragment extends DialogFragment implements AuthContract.A
     private OnDismissListener mOnDismissListener;
     private AuthContract.AuthPresenter authPresenter;
 
+
     public static AuthDialogFragment getInstance(AuthContract.AuthPresenter presenter) {
         AuthDialogFragment fragment = new AuthDialogFragment();
         fragment.authPresenter = presenter;
@@ -47,9 +50,8 @@ public class AuthDialogFragment extends DialogFragment implements AuthContract.A
 
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         hideWindowTitle();
         View parentView = inflater.inflate(R.layout.auth_dialog_fragment, container, false);
@@ -64,7 +66,6 @@ public class AuthDialogFragment extends DialogFragment implements AuthContract.A
             window.setBackgroundDrawableResource(R.drawable.login_bg);
         }
     }
-
 
     @Override
     public void onPause() {
@@ -87,6 +88,7 @@ public class AuthDialogFragment extends DialogFragment implements AuthContract.A
     @OnClick({R.id.facebook_login, R.id.google_login, R.id.twitter_login, R.id.login_button,
             R.id.signup, R.id.forgot_password})
     public void handleClicks(View view) {
+        Log.d("FBLoginSequence", "Fragment View : handleClicks");
         authPresenter.handleClicks(view.getId());
     }
 
@@ -111,4 +113,5 @@ public class AuthDialogFragment extends DialogFragment implements AuthContract.A
             }
         }
     }
+
 }

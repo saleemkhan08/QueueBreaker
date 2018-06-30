@@ -1,6 +1,5 @@
 package com.thnki.queuebreaker.model;
 
-
 import org.greenrobot.eventbus.EventBus;
 
 public class Snack

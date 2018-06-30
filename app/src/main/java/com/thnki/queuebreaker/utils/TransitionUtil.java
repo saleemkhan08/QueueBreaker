@@ -33,22 +33,17 @@ public class TransitionUtil
     public static void slideTransition(final ViewGroup container, final Runnable runnable)
     {
         Handler handler = new Handler();
-        handler.post(new Runnable()
-        {
-            @Override
-            public void run()
+        handler.post(() -> {
+            if (Build.VERSION.SDK_INT >= 21)
             {
-                if (Build.VERSION.SDK_INT >= 21)
-                {
-                    Slide slide = new Slide();
-                    TransitionManager.beginDelayedTransition(container, slide);
-                    runnable.run();
-                }
-                else if (Build.VERSION.SDK_INT >= 19)
-                {
-                    TransitionManager.beginDelayedTransition(container);
-                    runnable.run();
-                }
+                Slide slide = new Slide();
+                TransitionManager.beginDelayedTransition(container, slide);
+                runnable.run();
+            }
+            else if (Build.VERSION.SDK_INT >= 19)
+            {
+                TransitionManager.beginDelayedTransition(container);
+                runnable.run();
             }
         });
     }

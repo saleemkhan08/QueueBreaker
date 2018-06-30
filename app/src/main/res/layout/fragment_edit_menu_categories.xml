@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    tools:context=".restaurant.categories.EditMenuCategories">
+
+    <TextView
+        android:id="@+id/dialogHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:minWidth="300dp"
+        android:padding="10dp"
+        android:text="@string/edit_categories"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dialog_title"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/closeDialog"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/bg_circular_ripple_drawable"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="13dp"
+        android:src="@drawable/baseline_clear_24" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/dialogHeader"
+        android:clipToPadding="false"
+        android:paddingBottom="98dp"
+        android:paddingTop="10dp" />
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_above="@+id/saveCategoriesContainer"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        fresco:cardCornerRadius="21dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/newCategory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:background="@color/transparent"
+                android:paddingEnd="60dp"
+                android:paddingStart="15dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/addNewCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_margin="1dp"
+                android:focusable="true"
+                android:src="@drawable/ic_add_white_24dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        fresco:cardCornerRadius="0dp"
+        android:id="@+id/saveCategoriesContainer"
+        android:layout_alignParentBottom="true">
+            <TextView
+                android:id="@+id/saveCategories"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/save"
+                android:background="@drawable/dark_bg_ripple_drawable"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"/>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

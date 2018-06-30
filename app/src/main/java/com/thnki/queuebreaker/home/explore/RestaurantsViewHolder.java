@@ -33,4 +33,5 @@ class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
+
 }
