@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,27 +38,27 @@
         android:layout_height="match_parent"
         android:layout_below="@id/dialogHeader"
         android:clipToPadding="false"
-        android:paddingBottom="98dp"
-        android:paddingTop="10dp" />
+        android:paddingBottom="98dp" />
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/saveCategoriesContainer"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        fresco:cardCornerRadius="0dp"
-        android:id="@+id/saveCategoriesContainer"
-        android:layout_alignParentBottom="true">
-            <TextView
-                android:id="@+id/saveCategories"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="@string/save"
-                android:background="@drawable/dark_bg_ripple_drawable"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"/>
+        android:layout_alignParentBottom="true"
+        fresco:cardCornerRadius="0dp">
+
+        <TextView
+            android:id="@+id/saveCategories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/dark_bg_ripple_drawable"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary" />
     </android.support.v7.widget.CardView>
 
 

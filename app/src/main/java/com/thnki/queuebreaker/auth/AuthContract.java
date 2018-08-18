@@ -23,6 +23,8 @@ public interface AuthContract {
         void signUpWithEmail(String email, String password);
 
         void sendPasswordResetEmail(String email);
+
+        void hideLoginDialogButton(int visibility);
     }
 
     interface AuthFragmentView {
@@ -40,5 +42,7 @@ public interface AuthContract {
         void setFragmentView(AuthContract.AuthFragmentView fragmentView);
 
         void onAuthStateChanged(FirebaseUser currentUser);
+
+        void setupInitialView();
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.thnki.queuebreaker.R;
@@ -21,11 +22,17 @@ import static com.thnki.queuebreaker.auth.AuthActivity.LOGIN_STATUS;
 public class AuthWalkThroughFragment extends Fragment {
     private static final String WALK_THROUGH_PAGE_NUMBER = "section_number";
 
+    @BindView(R.id.walk_through_image)
+    SquareImageView walkThroughImageView;
+
+    @BindView(R.id.title)
+    TextView titleView;
+
     @BindView(R.id.walk_through_description)
     TextView descriptionView;
 
-    @BindView(R.id.walk_through_image)
-    SquareImageView walkThroughImageView;
+    @BindView(R.id.loginContainer)
+    FrameLayout loginContainerView;
 
     public AuthWalkThroughFragment() {
     }
@@ -43,7 +50,19 @@ public class AuthWalkThroughFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, rootView);
-        descriptionView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Gabriola.ttf"));
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "Gabriola.ttf");
+        descriptionView.setTypeface(typeface);
+        descriptionView.setVisibility(View.VISIBLE);
+        walkThroughImageView.setVisibility(View.VISIBLE);
+
+        titleView.setTypeface(typeface);
+        titleView.setVisibility(View.INVISIBLE);
+        loginContainerView.setVisibility(View.INVISIBLE);
+
+        View pageIndicatorView = rootView.findViewById(R.id.pageIndicatorViewContainer);
+        pageIndicatorView.setVisibility(View.INVISIBLE);
+
+
         switch (getArguments().getInt(WALK_THROUGH_PAGE_NUMBER)) {
             case 1:
                 walkThroughImageView.setImageResource(R.mipmap.scan);

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_marginBottom="2dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,10 +33,11 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            app:placeholderImage="@mipmap/restaurant"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dish_name"
-            app:srcCompat="@mipmap/order" />
+            />
 
         <TextView
             android:id="@+id/dish_description"
@@ -51,8 +52,8 @@
             android:layout_centerInParent="true"
             android:orientation="horizontal"
             android:gravity="center"
+            android:layout_marginStart="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/dishImage"
-            app:layout_constraintEnd_toStartOf="@+id/total_price"
             app:layout_constraintStart_toEndOf="@+id/dishImage"
             app:layout_constraintTop_toTopOf="@+id/dishImage">
 
@@ -60,7 +61,6 @@
                 android:id="@+id/decreaseItemCount"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/bg_circular_ripple_drawable"
                 android:clickable="true"
                 android:focusable="true"
@@ -80,7 +80,6 @@
                 android:id="@+id/increaseItemCount"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_margin="5dp"
                 android:background="@drawable/bg_circular_ripple_drawable"
                 android:clickable="true"
                 android:focusable="true"

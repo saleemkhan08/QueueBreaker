@@ -11,10 +11,7 @@ public class TransitionUtil
 {
     public static void defaultTransition(ViewGroup container)
     {
-        if (Build.VERSION.SDK_INT >= 19)
-        {
-            TransitionManager.beginDelayedTransition(container);
-        }
+        TransitionManager.beginDelayedTransition(container);
     }
 
     public static void slideTransition(ViewGroup container)
@@ -24,8 +21,20 @@ public class TransitionUtil
             Slide slide = new Slide();
             TransitionManager.beginDelayedTransition(container, slide);
         }
-        else if (Build.VERSION.SDK_INT >= 19)
+        else {
+            TransitionManager.beginDelayedTransition(container);
+        }
+    }
+
+    public static void slideTransition(ViewGroup container, int edge)
+    {
+        if (Build.VERSION.SDK_INT >= 21)
         {
+            Slide slide = new Slide();
+            slide.setSlideEdge(edge);
+            TransitionManager.beginDelayedTransition(container, slide);
+        }
+        else {
             TransitionManager.beginDelayedTransition(container);
         }
     }
@@ -40,8 +49,7 @@ public class TransitionUtil
                 TransitionManager.beginDelayedTransition(container, slide);
                 runnable.run();
             }
-            else if (Build.VERSION.SDK_INT >= 19)
-            {
+            else {
                 TransitionManager.beginDelayedTransition(container);
                 runnable.run();
             }
@@ -55,8 +63,7 @@ public class TransitionUtil
             Explode slide = new Explode();
             TransitionManager.beginDelayedTransition(container, slide);
         }
-        else if (Build.VERSION.SDK_INT >= 19)
-        {
+        else {
             TransitionManager.beginDelayedTransition(container);
         }
     }

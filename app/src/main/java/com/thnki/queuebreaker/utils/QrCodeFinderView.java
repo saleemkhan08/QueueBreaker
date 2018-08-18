@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -51,12 +50,11 @@ public final class QrCodeFinderView extends RelativeLayout {
             SCANNER_POS[i] = Math.abs(Math.sin(radians));
             SCANNER_ALPHA[i] = (int) (ALPHA_MAX * (Math.abs(Math.cos(radians))));
             SCANNER_ALPHA[i] += 100;
-            Log.d("SCANNER_ALPHA", "SCANNER_ALPHA : " + SCANNER_ALPHA[i]);
         }
 
         Resources resources = getResources();
         maskColor = resources.getColor(R.color.transparentWhite);
-        angleColor = resources.getColor(R.color.colorPrimary);
+        angleColor = resources.getColor(R.color.white);
 
         angleThickness = 8;
         angleLength = 80;
@@ -129,7 +127,7 @@ public final class QrCodeFinderView extends RelativeLayout {
         canvas.drawRect(right, bottom - angleLength, right + angleThickness, bottom, mPaint);
     }
 
-    private void drawLaser(Canvas canvas, Rect rect) {
+    public void drawLaser(Canvas canvas, Rect rect) {
         mPaint.setColor(angleColor);
         mPaint.setAlpha(SCANNER_ALPHA[mScannerAlpha]);
         mScannerAlpha = (mScannerAlpha + 1) % SCANNER_ALPHA.length;

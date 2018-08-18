@@ -2,56 +2,52 @@ package com.thnki.queuebreaker.model;
 
 import android.text.TextUtils;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseUser;
 
-public abstract class User {
-    public static final String FULL_NAME = "fullName";
-    public static final String PHOTO_URL = "photoUrl";
-    public static final String PASSWORD = "password";
-    public static final String NOT_SET = "Not Set..";
-    public static final String EMAIL_SUFFIX = "@clsroom.com";
-    public static final String EMAIL_SENT = "Email Sent";
-    public static final String INVALID_EMAIL = "Invalid Email";
-    public static final String PASSWORD_NOT_RESET = "Password not reset";
-    public static final String EMAIL_NOT_SENT = "Email Not Sent";
-    public static final String UID = "uid";
-    public static final String CLASS_ID = "classId";
-    public static final String CLASS_NAME = "className";
-    public static final String TOKEN = "token";
-    public static final String INVALID_TOKEN = "You Are Not Authorised";
-    public static final String STAFF_LIST = "Staff List";
-    public static final String STUDENT_LIST = "Student List";
-    public static final String GENERATE_USER_LIST_URL = "https://us-central1-clsroom-aqua.cloudfunctions.net/generateCredentialsList";
+public class User {
+
+    public static final String CUSTOMER = "customer";
+    public static final String WAITER = "staff";
+    public static final String ADMIN = "admin";
+    public static final String COOK = "cook";
+
+    private static final String NOT_SET = "not set";
+    public static final String USERS = "users";
     private String userId;
     private String fullName;
     private String photoUrl;
     private String password;
-    private String address;
     private String email;
-    private String phone;
+    private String phoneNumber;
     private String token;
+    private String userType;
 
-    public String getDob() {
-        if (dob == null) {
-            dob = NOT_SET;
+    public User() {
+
+    }
+
+    public User(FirebaseUser user) {
+        userId = user.getUid();
+        fullName = user.getDisplayName();
+        photoUrl = String.valueOf(user.getPhotoUrl());
+        email = user.getEmail();
+        phoneNumber = user.getPhoneNumber();
+        token = "";
+        password = "";
+        userType = CUSTOMER;
+
+        userId = user.getUid();
+    }
+
+    public String getPhoneNumber() {
+        if (phoneNumber == null) {
+            phoneNumber = NOT_SET;
         }
-        return dob;
+        return phoneNumber;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getPhone() {
-        if (phone == null) {
-            phone = NOT_SET;
-        }
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -64,24 +60,6 @@ public abstract class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getAddress() {
-        if (address == null) {
-            address = NOT_SET;
-        }
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    private String dob;
-
-    public static final String STUDENTS = "students";
-    public static final String STAFF = "staff";
-    public static final String ADMIN = "admin";
-    public static final String USER_ID = "userId";
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -121,16 +99,6 @@ public abstract class User {
         this.password = password;
     }
 
-    public abstract String userType();
-
-    public static DatabaseReference getRef(String userId) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        if (isStaff(userId)) {
-            return ref.child(User.STAFF).child(userId);
-        } else {
-            return ref.child(User.STUDENTS).child(userId.substring(0, 3)).child(userId);
-        }
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -148,10 +116,6 @@ public abstract class User {
                         && email.length() <= 320);
     }
 
-    public static boolean isStaff(String userId) {
-        return userId.charAt(0) == 'a' || userId.charAt(0) == 's';
-    }
-
     public String getToken() {
         return token;
     }
@@ -159,4 +123,15 @@ public abstract class User {
     public void setToken(String token) {
         this.token = token;
     }
+
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+
 }

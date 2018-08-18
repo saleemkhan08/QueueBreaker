@@ -5,7 +5,7 @@ import com.thnki.queuebreaker.home.FirestoreCollectionRepository;
 
 public class FirestoreRestaurantRepository extends FirestoreCollectionRepository<Restaurants> {
 
-    private static final String RESTAURANTS = "restaurants";
+    public static final String RESTAURANTS = "restaurants";
 
     FirestoreRestaurantRepository() {
         super(RESTAURANTS);

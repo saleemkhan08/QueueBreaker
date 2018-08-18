@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.thnki.queuebreaker.R;
 import com.thnki.queuebreaker.model.Progress;
 import com.thnki.queuebreaker.model.Snack;
 import com.thnki.queuebreaker.model.ToastMsg;
+import com.thnki.queuebreaker.restaurant.dishes.ActivityResultListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,6 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
+    protected ActivityResultListener activityResultListener;
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void setActivityResultListener(ActivityResultListener activityResultListener) {
+        this.activityResultListener = activityResultListener;
+        Log.d("ImageTest", "activityResultListener : " + activityResultListener);
+    }
+
     protected void showProgressDialog(int msg) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
@@ -96,4 +104,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
+
 }

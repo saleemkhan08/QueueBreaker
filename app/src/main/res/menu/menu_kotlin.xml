@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.thnki.queuebreaker.restaurant.MenuKotlinActivity">
+    <item
+        android:id="@+id/edit_categories"
+        app:actionLayout="@layout/action_bar_edit"
+        android:orderInCategory="100"
+        android:title="@string/modify_categories"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/cart"
+        android:orderInCategory="100"
+        android:title="@string/cart"
+        app:actionLayout="@layout/action_bar_cart"
+        app:showAsAction="always" />
+</menu>

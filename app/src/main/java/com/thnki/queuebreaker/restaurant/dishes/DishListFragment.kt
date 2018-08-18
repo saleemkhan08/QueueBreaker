@@ -1,11 +1,17 @@
 package com.thnki.queuebreaker.restaurant.dishes
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.thnki.queuebreaker.R
 import com.thnki.queuebreaker.home.CollectionListener
 import com.thnki.queuebreaker.model.Progress
@@ -20,24 +26,28 @@ import kotlinx.android.synthetic.main.edit_dish_options.*
 import kotlinx.android.synthetic.main.fragment_dish_list.*
 
 class DishListFragment : Fragment(), CollectionListener<Dishes>,
-        OnDismissListener<Dishes>, OnEditDishListener {
+        OnDismissListener<Dishes>, OnEditDishListener, OnBackPressedListener {
 
     var restaurantId = ""
     var category: MenuCategory? = null
     private var dishList: ArrayList<Dishes>? = null
     private var dishRepository: FirestoreDishRepository? = null
-
+    private var adapter: FirestoreDishesAdapter? = null
     private var currentDish: Dishes? = null
+    private var storageRef: StorageReference? = null
 
     companion object {
         fun newInstance(restaurantId: String, category: MenuCategory?): DishListFragment {
             val dishFragment = DishListFragment()
             dishFragment.restaurantId = restaurantId
             dishFragment.category = category
+            dishFragment.storageRef = FirebaseStorage.getInstance().reference
+                    .child(restaurantId).child(category!!.id)
             return dishFragment
         }
 
         const val TAG = "DishListFragment"
+        const val DISH_IMAGE_REQUEST_CODE = 123
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -52,12 +62,14 @@ class DishListFragment : Fragment(), CollectionListener<Dishes>,
         editDish.setOnClickListener({ showEditDishListFragment() })
         saveDish.setOnClickListener({ addDish() })
         cancelAdd.setOnClickListener({ cancelDishEdit() })
+        editPhoto.setOnClickListener({ editDishPhoto() })
     }
 
     override fun onCollectionChanged(collection: ArrayList<Dishes>?) {
         this.dishList = collection
         dishesList.layoutManager = LinearLayoutManager(activity)
-        dishesList.adapter = FirestoreDishesAdapter(this, activity as OrderListener, collection)
+        adapter = FirestoreDishesAdapter(this, activity as OrderListener, collection)
+        dishesList.adapter = adapter
         Progress.hide()
     }
 
@@ -81,7 +93,36 @@ class DishListFragment : Fragment(), CollectionListener<Dishes>,
         dishName.setText(currentDish?.name)
         dishPrice.setText(currentDish?.price)
         dishDescription.setText(currentDish?.description)
-        dishImage.setImageURI(currentDish?.image)
+        editDishImage.setImageURI(currentDish?.image)
+    }
+
+    private fun editDishPhoto() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, DISH_IMAGE_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        if (requestCode == DISH_IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
+            val uri: Uri = intent!!.data
+            editDishImage.setImageURI(uri, activity)
+
+            val fileRef = storageRef?.child(currentDish!!.id)
+
+            fileRef?.putFile(uri)?.addOnSuccessListener {
+                it.storage.downloadUrl.addOnSuccessListener {
+                    currentDish!!.image = it.toString()
+                    updateItem(currentDish!!)
+                    adapter?.notifyItemImageUploaded(currentDish!!.id, it)
+                }
+
+            }?.addOnFailureListener {
+                Log.d("ImageUpdate", "addOnFailureListener")
+                adapter?.notifyItemImageUploadFailed(currentDish!!.id)
+            }
+            adapter?.notifyItemImageUploadStarted(currentDish!!.id, uri)
+        }
     }
 
     private fun showEditDishListFragment() {
@@ -181,6 +222,11 @@ class DishListFragment : Fragment(), CollectionListener<Dishes>,
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        adapter?.removeOrderUpdateListener()
+    }
+
     private fun showMessage(str: String) {
         Progress.hide()
         ToastMsg.show(str)
@@ -205,7 +251,6 @@ class DishListFragment : Fragment(), CollectionListener<Dishes>,
     override fun editDish(dish: Dishes) {
         currentDish = dish
         editOptionsVisibility(View.VISIBLE)
-
     }
 
     override fun onDestroyView() {
@@ -213,5 +258,14 @@ class DishListFragment : Fragment(), CollectionListener<Dishes>,
         for (disposable in disposableList) {
             disposable.dispose()
         }
+    }
+
+    override fun onBackPressed(): Boolean {
+
+        if (editDishOptions.visibility != View.GONE) {
+            cancelDishEdit()
+            return true
+        }
+        return false
     }
 }

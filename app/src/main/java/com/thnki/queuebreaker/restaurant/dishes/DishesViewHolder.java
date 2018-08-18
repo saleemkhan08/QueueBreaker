@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ class DishesViewHolder extends RecyclerView.ViewHolder {
     TextSwitcher numberOfItems;
     ImageView decreaseItemCount;
     ImageView editDish;
+    RelativeLayout progressContainer;
+    TextView progressText;
 
     DishesViewHolder(View itemView) {
         super(itemView);
@@ -36,6 +39,8 @@ class DishesViewHolder extends RecyclerView.ViewHolder {
         decreaseItemCount = itemView.findViewById(R.id.decreaseItemCount);
         addToCart = itemView.findViewById(R.id.addToCart);
         editDish = itemView.findViewById(R.id.editDish);
+        progressContainer = itemView.findViewById(R.id.updating_progress);
+        progressText = itemView.findViewById(R.id.updating_progress_text);
         numberOfItems.setFactory(() -> {
             Context context = itemView.getContext();
             TextView textView = new TextView(context);
@@ -45,14 +50,14 @@ class DishesViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    void showAddToCart(){
+    void showAddToCart() {
         addToCart.setVisibility(View.VISIBLE);
         increaseItemCount.setVisibility(View.INVISIBLE);
         decreaseItemCount.setVisibility(View.INVISIBLE);
         numberOfItems.setVisibility(View.INVISIBLE);
     }
 
-    void showCounter(){
+    void showCounter() {
         addToCart.setVisibility(View.INVISIBLE);
         increaseItemCount.setVisibility(View.VISIBLE);
         decreaseItemCount.setVisibility(View.VISIBLE);

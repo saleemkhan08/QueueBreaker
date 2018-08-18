@@ -1,15 +1,23 @@
 package com.thnki.queuebreaker.auth;
 
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.thnki.queuebreaker.R;
 import com.thnki.queuebreaker.generic.LocalRepository;
 import com.thnki.queuebreaker.model.Progress;
 import com.thnki.queuebreaker.model.Snack;
+import com.thnki.queuebreaker.model.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,15 +65,13 @@ public class AuthPresenter implements AuthContract.AuthPresenter {
                 }
                 break;
             case R.id.signup:
-                activityView.launchMainActivity();
                 if (isValidateCredentials()) {
                     Progress.show(R.string.signing_up);
                     activityView.signUpWithEmail(email, password);
                 }
                 break;
             case R.id.forgot_password:
-                if(isValidEmail())
-                {
+                if (isValidEmail()) {
                     activityView.sendPasswordResetEmail(email);
                 }
                 break;
@@ -110,45 +116,51 @@ public class AuthPresenter implements AuthContract.AuthPresenter {
 
 
     @Override
-    public void onAuthStateChanged(FirebaseUser currentUser) {
+    public void onAuthStateChanged(final FirebaseUser currentUser) {
+        Log.d("LaunchedFrom", "currentUser = " + currentUser);
         if (currentUser != null) {
             localRepository.saveLoginStatus(true);
-            activityView.launchMainActivity();
+            updateUserDetails(currentUser);
         } else {
             localRepository.saveLoginStatus(false);
         }
     }
 
-//    @Override
-//    public void onComplete(@NonNull Task<AuthResult> task) {
-//        if (task.isSuccessful()) {
-//
-//            activityView.launchMainActivity();
-//        } else {
-//            Progress.hide();
-//            ToastMsg.show(R.string.login_failed);
-//        }
-//
-//    }
-
-    /* private void showPasswordResetResult(int msg) {
-        loginCredentials.setVisibility(View.GONE);
-        TransitionUtil.defaultTransition(loginCredentials);
-        passwordResetErrorMessage.setText(msg);
+    private void updateUserDetails(FirebaseUser currentUser) {
+        Log.d("LaunchedFrom", "updateUserDetails");
+        final DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference()
+                .child(User.USERS).child(currentUser.getUid());
+        currentUserRef.addListenerForSingleValueEvent(getValueEventListener(currentUser, currentUserRef));
     }
 
-    private void login() {
-        mUserId = mUserIdEditText.getText().toString().trim();
-        mPassword = mPasswordEditText.getText().toString().trim();
-        if (mUserId.length() < MIN_LENGTH_OF_USER_ID) {
-            ToastMsg.show(R.string.validUserIdErrMsg);
-        } else if (mPassword.length() < MIN_LENGTH_OF_PASSWORD) {
-            ToastMsg.show(R.string.validPasswordErrMsg);
-        } else {
-            Progress.show(R.string.signing_in);
-            mAuth.signInWithEmailAndPassword(mUserId + EMAIL_SUFFIX, mPassword)
-                    .addOnCompleteListener((OnCompleteListener<AuthResult>) getActivity());
-            dismiss();
+    @NonNull
+    private ValueEventListener getValueEventListener(FirebaseUser currentUser, DatabaseReference currentUserRef) {
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                AuthActivity.currentUser = dataSnapshot.getValue(User.class);
+                Log.d("LaunchedFrom", "onDataChange - AuthActivity.currentUser : "
+                        + AuthActivity.currentUser);
+                if (AuthActivity.currentUser == null) {
+                    currentUserRef.setValue(new User(currentUser))
+                            .addOnSuccessListener(aVoid -> activityView.launchMainActivity());
+                } else {
+                    activityView.launchMainActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("LaunchedFrom", "onCancelled");
+            }
+        };
+    }
+
+    @Override
+    public void setupInitialView() {
+        Log.d("LaunchedFrom", "setupInitialView : LoginStatus : " + localRepository.getLoginStatus());
+        if (localRepository.getLoginStatus()) {
+            activityView.hideLoginDialogButton(View.GONE);
         }
-    }*/
+    }
 }
